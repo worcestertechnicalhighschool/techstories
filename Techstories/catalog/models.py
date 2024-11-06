@@ -8,6 +8,7 @@ from django.db.models.signals import post_save
 # Create your models here.
 from django.db import models
 from django.urls import reverse
+from PIL import Image
 
 class Post(models.Model):
     """A typical class defining a model, derived from the Model class."""
@@ -33,11 +34,22 @@ class Post(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    avatar = models.ImageField(default='default.jpg', upload_to='profile_images')
     posts = models.ManyToManyField(Post, blank=True)
     bio = models.TextField(max_length=100)
 
     def __str__(self):
         return f"{self.user}"
+    
+    def save(self, *args, **kwargs):
+        super().save()
+
+        img = Image.open(self.avatar.path)
+
+        if img.height > 100 or img.width > 100:
+            new_img = (100, 100)
+            img.thumbnail(new_img)
+            img.save(self.avatar.path)
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
