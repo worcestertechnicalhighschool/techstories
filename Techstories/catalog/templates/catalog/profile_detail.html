@@ -1,0 +1,52 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>{{ profile.user.username }}</h1>
+
+{% if followed %}
+<form action="" method="post">
+    {% csrf_token %}
+    <input type="submit" class="btn btn-dark" name="btn" value="Unfollow">
+</form>
+{% else %}
+<form action="" method="post">
+    {% csrf_token %}
+    <input type="submit" class="btn btn-primary" name="btn" value="Follow">
+</form>
+{% endif %}
+
+<div class="row">
+    <div class="col-sm-2">
+        <img src="{{ profile.avatar.url }} " style="cursor: pointer; margin-top: 10px;"/>
+    </div>
+    <div class="col-sm-8 post-wrap">
+        <p><strong>Bio: </strong> {{ profile.bio }}</p>
+    </div>
+</div>  
+
+<div class="row" style="margin-top: 25px;">
+<div class="col-sm-2">
+    <h4><Strong>Followers</Strong> {{ profile.followers.all.count }}</h4>
+    <ul>
+    {% for follower in profile.followers.all %}
+        <li><a href="{{ follower.get_absolute_url }}">{{ follower.user.username }}</a></li>
+    {% endfor %}
+    </ul>
+</div>
+
+<div class="col-sm-8">
+    <h4>Posts</h4>
+    {% for post in profile.post_set.all %}
+
+    <div class="row post-wrap">
+        <div class="col-sm-4">
+            <h5><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h5> 
+            <img class="post-mini" src="{{ post.image.url }}" style="cursor: pointer;"/>
+        </div>
+        <div class="col-sm-8">
+            <p>{{ post.caption }}</p>
+        </div>
+    </div>    
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,12 +1,19 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Techstories Home</h1>
-  <p>
-    Welcome to Techstories, a website developed by
-    <em>Programming and Web Development</em>!
-  </p>
-{% endblock %}
+<div class="col-sm-8">
+    <h4>For You</h4>
+    {% for post in posts %}
 
-{% load static %}
-<link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <div class="row post-wrap">
+        <div class="col-sm-4">
+            <h5><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h5> 
+            <img class="post-mini" src="{{ post.image.url }}" style="cursor: pointer;"/>
+        </div>
+        <div class="col-sm-8">
+            <p>{{ post.caption }}</p>
+        </div>
+    </div>    
+    {% endfor %}
+</div>
+{% endblock %}

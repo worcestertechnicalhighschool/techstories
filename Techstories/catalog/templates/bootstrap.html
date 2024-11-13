@@ -1,0 +1,8 @@
+{% extends 'django_bootstrap5/bootstrap5.html' %}
+
+{% block bootstrap5_title %} {% block title %}{% endblock %}{% endblock %}
+{% block bootstrap5_extra_head %} 
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+{% endblock %}

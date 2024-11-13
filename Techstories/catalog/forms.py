@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from .models import Profile
 from django.forms import ModelForm
 
+class FollowForm(forms.Form):
+    btn = forms.CharField()
 
 class UpdateUserForm(forms.ModelForm):
     username = forms.CharField(max_length=100,
