@@ -42,6 +42,8 @@
         <div class="col-sm-4">
             <h5><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h5> 
             <img class="post-mini" src="{{ post.image.url }}" style="cursor: pointer;"/>
+            <hr>
+            <h6> ♥︎ {{ post.likes.count }} </h6>
         </div>
         <div class="col-sm-8">
             <p>{{ post.caption }}</p>

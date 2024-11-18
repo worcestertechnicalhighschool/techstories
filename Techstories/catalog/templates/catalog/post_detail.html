@@ -2,14 +2,25 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-6">
         <h1>{{ post.title }}</h5> 
         <img class="post-medium" src="{{ post.image.url }}" style="cursor: pointer;"/>
         <p>{{ post.caption }}</p>
     </div>
     <div class="col-sm-4">
         <h2>{{ post.author }}</h2>
-        <p>Likes: {{ post.likes }}</p>
+        {% if liked %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-dark" name="btn" value="Unlike">
+        </form>
+        {% else %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-primary" name="btn" value="Like">
+        </form>
+        {% endif %}
+        <p> {{ post.likes.count }}</p>
     </div>
 </div>
 {% endblock %}

@@ -14,12 +14,9 @@ class Post(models.Model):
     image = models.ImageField(upload_to='post_images')
     title = models.CharField(max_length=20, help_text='Enter post title')
     caption = models.TextField(max_length=10000)
-    likes = models.PositiveIntegerField(default = 0)
     date = models.DateTimeField(auto_now=True)
     author = models.ForeignKey('Profile', on_delete=models.RESTRICT, null=True)
-
-    class Meta:
-        ordering = ['-caption', '-likes']
+    likes = models.ManyToManyField('Profile', blank=True, related_name='likes')
 
     def get_absolute_url(self):
         return reverse('post-detail', args=[str(self.id)])

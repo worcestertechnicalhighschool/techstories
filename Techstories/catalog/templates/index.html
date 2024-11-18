@@ -3,17 +3,22 @@
 {% block content %}
 <div class="col-sm-8">
     <h4>For You</h4>
-    {% for post in posts %}
-
-    <div class="row post-wrap">
-        <div class="col-sm-4">
-            <h5><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h5> 
-            <img class="post-mini" src="{{ post.image.url }}" style="cursor: pointer;"/>
-        </div>
-        <div class="col-sm-8">
-            <p>{{ post.caption }}</p>
-        </div>
-    </div>    
-    {% endfor %}
+    {% if posts %}
+        {% for post in posts %}
+        <div class="row post-wrap">
+            <div class="col-sm-4">
+                <h5><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h5> 
+                <img class="post-mini" src="{{ post.image.url }}" style="cursor: pointer;"/>
+                <hr>
+                <h6> ♥︎ {{ post.likes.count }} </h6>
+            </div>
+            <div class="col-sm-8">
+                <p>{{ post.caption }}</p>
+            </div>
+        </div>    
+        {% endfor %}
+    {% else %}
+        <p> Follow people to see posts. </p>
+    {% endif %}
 </div>
 {% endblock %}

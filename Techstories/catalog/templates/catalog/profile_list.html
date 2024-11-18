@@ -6,7 +6,7 @@
     {% for profile in profile_list %}
       <div class="row post-wrap">
         <div class="col-sm-1">
-          <img class="avatar" src="{{ profile.avatar.url }} " style="cursor: pointer; margin-top: 50%;"/>
+          <img class="avatar-large" src="{{ profile.avatar.url }} " style="cursor: pointer; margin-top: 50%;"/>
         </div>
         <div class="col-sm-8"> 
           <h1><a class="nav-link" href="{{ profile.get_absolute_url }}">{{ profile.user.username }}</a></h1>

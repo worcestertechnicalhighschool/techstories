@@ -1,10 +1,13 @@
 from django import forms
 
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Post
 from django.forms import ModelForm
 
 class FollowForm(forms.Form):
+    btn = forms.CharField()
+
+class LikeForm(forms.Form):
     btn = forms.CharField()
 
 class UpdateUserForm(forms.ModelForm):
@@ -26,7 +29,13 @@ class UpdateProfileForm(forms.ModelForm):
         model = Profile
         fields = ['avatar', 'bio']
 
-class ProfileModelForm(ModelForm):
+class ProfileModelForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['avatar', 'bio']
+
+class CreatePostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['image', 'title', 'caption']
+
