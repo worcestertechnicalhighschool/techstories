@@ -4,7 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 # Create your views here.
 from django.contrib import messages
 from django.shortcuts import render
-from .forms import UpdateUserForm, UpdateProfileForm, FollowForm, LikeForm
+from .forms import UpdateUserForm, UpdateProfileForm, FollowForm, LikeForm, UpdatePostForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile, Post
 from .forms import CreatePostForm
@@ -13,6 +13,7 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 
 @login_required
 def index(request): 
@@ -54,7 +55,7 @@ def post_detail_view(request, pk):
                 post.likes.remove(request.user.profile)
 
     liked = post.likes.contains(request.user.profile)
-    return render(request, 'catalog/post_detail.html', context= {'post': post, 'liked': liked})
+    return render(request, 'catalog/post_detail.html', context= {'post': post, 'liked': liked, 'owned': post.author == request.user.profile})
 
 @login_required
 def profile_detail_view(request, pk):
@@ -69,7 +70,7 @@ def profile_detail_view(request, pk):
                 profile.followers.remove(request.user.profile)
 
     followed = profile.followers.contains(request.user.profile)
-    return render(request, 'catalog/profile_detail.html', context={'profile': profile, 'followed': followed })
+    return render(request, 'catalog/profile_detail.html', context={'profile': profile, 'followed': followed})
 
 @login_required
 def post_create_view(request):
@@ -92,3 +93,20 @@ class PostCreate(LoginRequiredMixin, CreateView):
         form.instance.author = self.request.user.profile
         form.save()
         return super().form_valid(form)
+
+class PostUpdate(LoginRequiredMixin, UpdateView):
+    model = Post
+    form_class = UpdatePostForm
+
+class PostDelete(LoginRequiredMixin, DeleteView):
+    model = Post
+    success_url = reverse_lazy('profiles')
+
+    def form_valid(self, form):
+        try:
+            self.object.delete()
+            return HttpResponseRedirect(self.success_url)
+        except Exception as e:
+            return HttpResponseRedirect(
+                reverse("post-delete", kwargs={"pk": self.object.pk})
+            )

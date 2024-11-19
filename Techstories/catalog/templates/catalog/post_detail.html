@@ -5,6 +5,11 @@
     <div class="col-sm-6">
         <h1>{{ post.title }}</h5> 
         <img class="post-medium" src="{{ post.image.url }}" style="cursor: pointer;"/>
+        
+        {% if owned %}
+        <p><a href="{% url 'post-update' post.id %}">Update Post</a>
+         <a href="{% url 'post-delete' post.id %}">Delete Post</a></p>
+        {% endif %}
         <p>{{ post.caption }}</p>
     </div>
     <div class="col-sm-4">
