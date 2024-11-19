@@ -49,3 +49,22 @@ body {
   padding: 0;
   list-style: none;
 }
+
+/* The animation code */
+@keyframes example {
+  0%   {left:200px; top:1000px;}
+  25%  {left:200px; top:0px;}
+  50%  {left:600px; top:200px;}
+  75%  {left:0px; top:200px;}
+  100% {left:900px; top:150px;}
+}
+
+/* The element to apply the animation to */
+.catpaw {
+  display: inline;
+  width: 1000px;
+  height: 1000px;
+  position: absolute;
+  animation-name: example;
+  animation-duration: 4s;
+}

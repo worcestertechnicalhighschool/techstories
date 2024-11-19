@@ -18,10 +18,12 @@
             {% load static %}
             <audio id="sound" src="{% static 'sounds/confetti.mp3' %}"></audio>
 
-        <form action="" method="post">
-            {% csrf_token %}
-            <input type="submit" class="btn btn-dark" name="btn" value="Unlike">
-        </form>
+            <form action="" method="post">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-dark" name="btn" value="Unlike">
+            </form>
+
+            <img class="catpaw" src="{% static 'images/catpaw.png' %}">
         {% else %}
         <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -33,17 +35,20 @@
 </div>
 
 {% block scripts %}
-<canvas id="confetti"></canvas>
+<canvas id="confetti">
+</canvas>
 <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
 <script>
     const sound = document.getElementById("sound");
     const canvas = document.querySelector('#confetti');
     const jsCOnfetti = new JSConfetti;
+    context = canvas.getContext('2d');
 
     if (sound) {
         jsCOnfetti.addConfetti();
         sound.play();
     } 
+    
 </script>
 {% endblock %}
 {% endblock %}
