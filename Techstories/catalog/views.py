@@ -15,6 +15,10 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
+import os
+from django.http import FileResponse
+from django.conf import settings
+
 @login_required
 def index(request): 
     following = Profile.objects.filter(followers = request.user.profile)
@@ -55,7 +59,7 @@ def post_detail_view(request, pk):
                 post.likes.remove(request.user.profile)
 
     liked = post.likes.contains(request.user.profile)
-    return render(request, 'catalog/post_detail.html', context= {'post': post, 'liked': liked, 'owned': post.author == request.user.profile})
+    return render(request, 'catalog/post_detail.html', context= {'post': post, 'liked': liked, 'owned': post.author == request.user.profile })
 
 @login_required
 def profile_detail_view(request, pk):
@@ -110,3 +114,7 @@ class PostDelete(LoginRequiredMixin, DeleteView):
             return HttpResponseRedirect(
                 reverse("post-delete", kwargs={"pk": self.object.pk})
             )
+
+def play_audio(request, audio_file_name):
+    file_path = os.path.join(settings.MEDIA_ROOT, audio_file_name)
+    return FileResponse(open(file_path, 'rb'), content_type='audio/mpeg')

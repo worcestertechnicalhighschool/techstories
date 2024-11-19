@@ -5,7 +5,7 @@
     <div class="col-sm-6">
         <h1>{{ post.title }}</h5> 
         <img class="post-medium" src="{{ post.image.url }}" style="cursor: pointer;"/>
-        
+
         {% if owned %}
         <p><a href="{% url 'post-update' post.id %}">Update Post</a>
          <a href="{% url 'post-delete' post.id %}">Delete Post</a></p>
@@ -15,12 +15,15 @@
     <div class="col-sm-4">
         <h2>{{ post.author }}</h2>
         {% if liked %}
+            {% load static %}
+            <audio id="sound" src="{% static 'sounds/confetti.mp3' %}"></audio>
+
         <form action="" method="post">
             {% csrf_token %}
             <input type="submit" class="btn btn-dark" name="btn" value="Unlike">
         </form>
         {% else %}
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <input type="submit" class="btn btn-primary" name="btn" value="Like">
         </form>
@@ -28,4 +31,19 @@
         <p> {{ post.likes.count }}</p>
     </div>
 </div>
+
+{% block scripts %}
+<canvas id="confetti"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+<script>
+    const sound = document.getElementById("sound");
+    const canvas = document.querySelector('#confetti');
+    const jsCOnfetti = new JSConfetti;
+
+    if (sound) {
+        jsCOnfetti.addConfetti();
+        sound.play();
+    } 
+</script>
+{% endblock %}
 {% endblock %}
