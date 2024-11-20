@@ -44,10 +44,16 @@
     const jsCOnfetti = new JSConfetti;
     context = canvas.getContext('2d');
 
+    const paw = document.querySelector(".catpaw");
+
     if (sound) {
         jsCOnfetti.addConfetti();
         sound.play();
     } 
+
+    paw.addEventListener('animationend', (event) => {
+        paw.style.display = 'none';
+    });
     
 </script>
 {% endblock %}

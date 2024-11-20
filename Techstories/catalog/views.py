@@ -21,6 +21,7 @@ from django.conf import settings
 
 @login_required
 def index(request): 
+    #https://stackoverflow.com/questions/50431810/the-queryset-value-for-an-exact-lookup-must-be-limited-to-one-result-using-slici
     following = Profile.objects.filter(followers = request.user.profile)
     posts = Post.objects.filter(author__in = following)
 

@@ -53,10 +53,12 @@ body {
 /* The animation code */
 @keyframes example {
   0%   {left:200px; top:1000px;}
-  25%  {left:200px; top:0px;}
-  50%  {left:600px; top:200px;}
-  75%  {left:0px; top:200px;}
-  100% {left:900px; top:150px;}
+  5%   {left:500px; top:-10px; transform: rotate(10deg);}
+  10%   {left:-50px; top:100px; transform: rotate(-10deg);}
+  15%   {left:350px; top:-30px; transform: rotate(15deg);}
+  20%   {left:-100px; top:30px; transform: rotate(-15deg);}
+  50%  {left:200px; top:150px; transform: rotate(0deg);}
+  100% {left:300px; top:1000px; transform: rotate(-5deg); }
 }
 
 /* The element to apply the animation to */
@@ -66,5 +68,5 @@ body {
   height: 1000px;
   position: absolute;
   animation-name: example;
-  animation-duration: 4s;
+  animation-duration: 3s;
 }
