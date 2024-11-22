@@ -37,7 +37,6 @@
 <div class="col-sm-8">
     <h4>Posts</h4>
     {% for post in profile.post_set.all %}
-
     <div class="row post-wrap">
         <div class="col-sm-4">
             <h5><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h5> 

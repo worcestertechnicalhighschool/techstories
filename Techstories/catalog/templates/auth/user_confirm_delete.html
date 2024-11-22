@@ -1,0 +1,33 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>Delete User</h1>
+
+{% if user.profile.post_set.all %}
+  <p>You can't delete this user until all their posts have been deleted</p>
+  <div class="col-sm-8">
+    {% for post in user.profile.post_set.all %}
+    <div class="row post-wrap">
+        <div class="col-sm-4">
+            <h5><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h5> 
+            <img class="post-mini" src="{{ post.image.url }}" style="cursor: pointer;"/>
+            <hr>
+            <h6> ♥︎ {{ post.likes.count }} </h6>
+        </div>
+        <div class="col-sm-8">
+            <p>{{ post.caption }}</p>
+        </div>
+    </div>    
+    {% endfor %}
+  </div>
+{% else %}
+  <p>Are you sure you want to delete this user?</p>
+
+  <form action="" method="POST">
+    {% csrf_token %}
+    <input type="submit" class="btn btn-danger" action="" value="Yes, delete.">
+  </form>
+{% endif %}
+
+{% endblock %}

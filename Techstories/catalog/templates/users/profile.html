@@ -36,6 +36,8 @@
                 </div>
             </div>
             <br>
+            <a href="{% url 'profile-delete' user.id %}"><input class="btn btn-danger"value="Delete User"></a>
+            <hr>
             <button type="submit" class="btn btn-primary">Save Changes</button>
             <button type="reset" class="btn btn-primary">Reset</button>
             <input type="hidden" name="next" value="{{ next }}">

@@ -4,10 +4,9 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 # Create your views here.
 from django.contrib import messages
 from django.shortcuts import render
-from .forms import UpdateUserForm, UpdateProfileForm, FollowForm, LikeForm, UpdatePostForm
+from .forms import UpdateUserForm, UpdateProfileForm, FollowForm, LikeForm, UpdatePostForm, CreatePostForm, CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
-from .models import Profile, Post
-from .forms import CreatePostForm
+from .models import Profile, Post, User
 from django.views import generic
 from django.urls import reverse
 from django.http import HttpResponseRedirect
@@ -26,6 +25,16 @@ def index(request):
     posts = Post.objects.filter(author__in = following)
 
     return render(request, 'index.html', context={'posts': posts})
+
+def register(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('login'))
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'registration/register.html', {'form': form })
 
 @login_required
 def profile(request):
@@ -114,6 +123,19 @@ class PostDelete(LoginRequiredMixin, DeleteView):
         except Exception as e:
             return HttpResponseRedirect(
                 reverse("post-delete", kwargs={"pk": self.object.pk})
+            )
+
+class UserDelete(LoginRequiredMixin, DeleteView):
+    model = User
+    success_url = reverse_lazy('login')
+
+    def form_valid(self, form):
+        try:
+            self.object.delete()
+            return HttpResponseRedirect(self.success_url)
+        except Exception as e:
+            return HttpResponseRedirect(
+                reverse("profile", kwargs={"pk": self.object.pk})
             )
 
 def play_audio(request, audio_file_name):

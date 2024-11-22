@@ -7,10 +7,13 @@
         <img class="post-medium" src="{{ post.image.url }}" style="cursor: pointer;"/>
 
         {% if owned %}
-        <p><a href="{% url 'post-update' post.id %}">Update Post</a>
-         <a href="{% url 'post-delete' post.id %}">Delete Post</a></p>
+        <div>
+            <a href="{% url 'post-update' post.id %}"><input type="submit" class="btn btn-warning" value="Update Post"></a>
+            <a href="{% url 'post-delete' post.id %}"><input type="submit" class="btn btn-danger"value="Delete Post"></a>
+        </div>
         {% endif %}
-        <p>{{ post.caption }}</p>
+        <hr>
+        <p><strong>Description </strong>{{ post.caption }}</p>
     </div>
     <div class="col-sm-4">
         <h2>{{ post.author }}</h2>
