@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h3>Profiles</h3>
+  {% if profile_list %}
+    {% for profile in profile_list %}
+      <div class="row post-wrap">
+        <div class="col-sm-1">
+          <img class="avatar-large" src="{{ profile.avatar.url }} " style="cursor: pointer; margin-top: 50%;"/>
+        </div>
+        <div class="col-sm-8"> 
+          <h1><a class="nav-link" href="{{ profile.get_absolute_url }}">{{ profile.user.username }}</a></h1>
+          <p>{{ profile.followers.all.count }} <strong>Followers</strong></p>
+          <p>{{ profile.post_set.all.count }} <strong>Posts</strong></p>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>There are no users.</p>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-6">
+        <h1>{{ post.title }}</h5> 
+        <img class="post-medium" src="{{ post.image.url }}" style="cursor: pointer;"/>
+
+        {% if owned %}
+        <div>
+            <a href="{% url 'post-update' post.id %}"><input type="submit" class="btn btn-warning" value="Update Post"></a>
+            <a href="{% url 'post-delete' post.id %}"><input type="submit" class="btn btn-danger"value="Delete Post"></a>
+        </div>
+        {% endif %}
+        <hr>
+        <p><strong>Description </strong>{{ post.caption }}</p>
+    </div>
+    <div class="col-sm-4">
+        <h2>{{ post.author }}</h2>
+        {% if liked %}
+            {% load static %}
+            <audio id="sound" src="{% static 'sounds/confetti.mp3' %}"></audio>
+
+            <form action="" method="post">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-dark" name="btn" value="Unlike">
+            </form>
+
+            <img class="catpaw" src="{% static 'images/catpaw.png' %}">
+        {% else %}
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-primary" name="btn" value="Like">
+        </form>
+        {% endif %}
+        <p> {{ post.likes.count }}</p>
+    </div>
+</div>
+
+{% block scripts %}
+<canvas id="confetti">
+</canvas>
+<script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+<script>
+    const sound = document.getElementById("sound");
+    const canvas = document.querySelector('#confetti');
+    const jsCOnfetti = new JSConfetti;
+    context = canvas.getContext('2d');
+
+    const paw = document.querySelector(".catpaw");
+
+    if (sound) {
+        jsCOnfetti.addConfetti();
+        sound.play();
+    } 
+
+    paw.addEventListener('animationend', (event) => {
+        paw.style.display = 'none';
+    });
+    
+</script>
+{% endblock %}
+{% endblock %}

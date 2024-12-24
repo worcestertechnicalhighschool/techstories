@@ -1,0 +1,73 @@
+.avatar {
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid;
+}
+
+.avatar-large {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.post-mini {
+  vertical-align: middle;
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.post-medium {
+  vertical-align: middle;
+  width: 400px;
+  height: 300px;
+  object-fit: cover;
+
+  border-radius: 10px / 10px;
+  border: 1px solid;
+  padding: 10px;
+  margin: 15px;
+  box-shadow: 5px 10px 8px #888888;  
+}
+
+.post-wrap {
+  background-color: #b2b9bf;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px / 10px;
+}
+
+body {
+  background-color: #cbd2d8;
+}
+
+.sidebar-nav {
+  margin-top: 20px;
+  padding: 0;
+  list-style: none;
+}
+
+/* The animation code */
+@keyframes example {
+  0%   {left:200px; top:1000px;}
+  5%   {left:500px; top:-10px; transform: rotate(10deg);}
+  10%   {left:-50px; top:100px; transform: rotate(-10deg);}
+  15%   {left:350px; top:-30px; transform: rotate(15deg);}
+  20%   {left:-100px; top:30px; transform: rotate(-15deg);}
+  50%  {left:200px; top:150px; transform: rotate(0deg);}
+  100% {left:300px; top:1000px; transform: rotate(-5deg); }
+}
+
+/* The element to apply the animation to */
+.catpaw {
+  display: inline;
+  width: 1000px;
+  height: 1000px;
+  position: absolute;
+  animation-name: example;
+  animation-duration: 3s;
+}
